@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//este es un comentario de prueba
+
 namespace CafeteriaApp.Forms
 {
     public partial class FormFinDia : Form
