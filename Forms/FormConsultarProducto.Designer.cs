@@ -19,26 +19,28 @@ namespace CafeteriaApp.Forms
 
         private void InitializeComponent()
         {
-            this.dataGridViewProductos = new System.Windows.Forms.DataGridView();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridViewProductos = new DataGridView();
+            this.txtBuscar = new TextBox();
+            this.btnBuscar = new Button();
+            this.label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).BeginInit();
             this.SuspendLayout();
+
             // 
             // dataGridViewProductos
             // 
             this.dataGridViewProductos.AllowUserToAddRows = false;
             this.dataGridViewProductos.AllowUserToDeleteRows = false;
-            this.dataGridViewProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewProductos.Location = new System.Drawing.Point(12, 99);
             this.dataGridViewProductos.MultiSelect = false;
             this.dataGridViewProductos.Name = "dataGridViewProductos";
             this.dataGridViewProductos.ReadOnly = true;
-            this.dataGridViewProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewProductos.Size = new System.Drawing.Size(560, 150);
             this.dataGridViewProductos.TabIndex = 0;
-            this.dataGridViewProductos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewProductos_CellDoubleClick);
+            this.dataGridViewProductos.CellDoubleClick += new DataGridViewCellEventHandler(this.dataGridViewProductos_CellDoubleClick);
+
             // 
             // txtBuscar
             // 
@@ -46,7 +48,8 @@ namespace CafeteriaApp.Forms
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(173, 20);
             this.txtBuscar.TabIndex = 1;
-            this.txtBuscar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscar_KeyDown);
+            this.txtBuscar.KeyDown += new KeyEventHandler(this.txtBuscar_KeyDown);
+
             // 
             // btnBuscar
             // 
@@ -57,6 +60,7 @@ namespace CafeteriaApp.Forms
             this.btnBuscar.Text = "BUSCAR";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.button1_Click);
+
             // 
             // label1
             // 
@@ -68,27 +72,27 @@ namespace CafeteriaApp.Forms
             this.label1.Size = new System.Drawing.Size(144, 44);
             this.label1.TabIndex = 3;
             this.label1.Text = "Consulta";
+
             // 
             // FormConsultarProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(223)))));
             this.ClientSize = new System.Drawing.Size(584, 261);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.dataGridViewProductos);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormConsultarProducto";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Consultar Productos";
             this.Load += new System.EventHandler(this.FormConsultarProducto_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

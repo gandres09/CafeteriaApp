@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,23 @@ namespace CafeteriaApp
         private bool diaIniciado = false;
         private bool diaCerrado = false;
         private FormResumenDia formResumenDia;
-        private FormularioVentas formVentas;
+        //private FormularioVentas formVentas;
+
+
+
 
         public FormPrincipal()
         {
             InitializeComponent();
             VerificarEstadoDia();
             ActualizarBotonesEstadoDia();  // <-- Aquí actualizamos los botones al iniciar
+            typeof(Panel).InvokeMember("DoubleBuffered",
+    System.Reflection.BindingFlags.SetProperty |
+    System.Reflection.BindingFlags.Instance |
+    System.Reflection.BindingFlags.NonPublic,
+    null, pnlEstadoDia, new object[] { true });
         }
+
 
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
@@ -143,9 +153,24 @@ namespace CafeteriaApp
 
         private void pnlEstadoDia_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddEllipse(0, 0, pnlEstadoDia.Width - 1, pnlEstadoDia.Height - 1);
-            pnlEstadoDia.Region = new Region(path);
+            int radioEsquinas = 15;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            using (GraphicsPath path = GetRoundedRectPath(pnlEstadoDia.ClientRectangle, radioEsquinas))
+            {
+                pnlEstadoDia.Region = new Region(path);
+
+                using (SolidBrush brush = new SolidBrush(pnlEstadoDia.BackColor))
+                {
+                    e.Graphics.FillPath(brush, path); // Rellena con fondo solo dentro del área redondeada
+                }
+
+                using (Pen pen = new Pen(Color.Transparent, 1))
+                {
+                    e.Graphics.DrawPath(pen, path); // Borde opcional invisible
+                }
+            }
         }
 
         private void ActualizarEstadoDia()
@@ -299,5 +324,22 @@ namespace CafeteriaApp
             formVenta.ShowDialog();
 
         }
+
+        private GraphicsPath GetRoundedRectPath(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            int diameter = radius * 2;
+
+            // Esquinas redondeadas
+            path.StartFigure();
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90); // Superior izquierda
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90); // Superior derecha
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90); // Inferior derecha
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90); // Inferior izquierda
+            path.CloseFigure();
+
+            return path;
+        }
+
     }
 }

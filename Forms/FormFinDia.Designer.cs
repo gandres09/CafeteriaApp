@@ -2,15 +2,8 @@
 {
     partial class FormFinDia
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,83 +15,88 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTitle = new System.Windows.Forms.Label();
             this.lblSaldoFinal = new System.Windows.Forms.Label();
             this.txtSaldoFinal = new System.Windows.Forms.TextBox();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.btnCerrarDia = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // labelTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Poor Richard", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Sienna;
-            this.label1.Location = new System.Drawing.Point(62, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(159, 44);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Fin de Dia";
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Poor Richard", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle.ForeColor = System.Drawing.Color.Sienna;
+            this.labelTitle.Location = new System.Drawing.Point(70, 20);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(144, 44);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "Fin de Día";
             // 
             // lblSaldoFinal
             // 
             this.lblSaldoFinal.AutoSize = true;
-            this.lblSaldoFinal.Location = new System.Drawing.Point(56, 99);
+            this.lblSaldoFinal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSaldoFinal.Location = new System.Drawing.Point(50, 90);
             this.lblSaldoFinal.Name = "lblSaldoFinal";
-            this.lblSaldoFinal.Size = new System.Drawing.Size(59, 13);
-            this.lblSaldoFinal.TabIndex = 7;
+            this.lblSaldoFinal.Size = new System.Drawing.Size(73, 19);
+            this.lblSaldoFinal.TabIndex = 1;
             this.lblSaldoFinal.Text = "Saldo final:";
             // 
             // txtSaldoFinal
             // 
-            this.txtSaldoFinal.Location = new System.Drawing.Point(122, 91);
+            this.txtSaldoFinal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSaldoFinal.Location = new System.Drawing.Point(130, 87);
             this.txtSaldoFinal.Name = "txtSaldoFinal";
-            this.txtSaldoFinal.Size = new System.Drawing.Size(100, 20);
-            this.txtSaldoFinal.TabIndex = 8;
+            this.txtSaldoFinal.Size = new System.Drawing.Size(100, 25);
+            this.txtSaldoFinal.TabIndex = 2;
             this.txtSaldoFinal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSaldoFinal_KeyPress);
             // 
             // lblMensaje
             // 
             this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Location = new System.Drawing.Point(56, 171);
+            this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+            this.lblMensaje.Location = new System.Drawing.Point(50, 140);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(28, 13);
-            this.lblMensaje.TabIndex = 9;
-            this.lblMensaje.Text = "error";
+            this.lblMensaje.Size = new System.Drawing.Size(35, 13);
+            this.lblMensaje.TabIndex = 3;
+            this.lblMensaje.Text = "Error";
             this.lblMensaje.Visible = false;
             // 
             // btnCerrarDia
             // 
-            this.btnCerrarDia.Location = new System.Drawing.Point(134, 117);
+            this.btnCerrarDia.BackColor = System.Drawing.Color.Sienna;
+            this.btnCerrarDia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarDia.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarDia.ForeColor = System.Drawing.Color.White;
+            this.btnCerrarDia.Location = new System.Drawing.Point(110, 170);
             this.btnCerrarDia.Name = "btnCerrarDia";
-            this.btnCerrarDia.Size = new System.Drawing.Size(75, 23);
-            this.btnCerrarDia.TabIndex = 10;
-            this.btnCerrarDia.Text = "Cerrar Dia";
-            this.btnCerrarDia.UseVisualStyleBackColor = true;
+            this.btnCerrarDia.Size = new System.Drawing.Size(90, 30);
+            this.btnCerrarDia.TabIndex = 4;
+            this.btnCerrarDia.Text = "Cerrar Día";
+            this.btnCerrarDia.UseVisualStyleBackColor = false;
             this.btnCerrarDia.Click += new System.EventHandler(this.btnCerrarDia_Click);
             // 
             // FormFinDia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this.btnCerrarDia;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(223)))));
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.BackColor = System.Drawing.Color.FromArgb(249, 241, 223);
+            this.ClientSize = new System.Drawing.Size(300, 230);
             this.Controls.Add(this.btnCerrarDia);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.txtSaldoFinal);
             this.Controls.Add(this.lblSaldoFinal);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTitle);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormFinDia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Fin de Dia";
+            this.Text = "Fin de Día";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,7 +104,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Label lblSaldoFinal;
         private System.Windows.Forms.TextBox txtSaldoFinal;
         private System.Windows.Forms.Label lblMensaje;

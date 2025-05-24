@@ -108,8 +108,28 @@ namespace CafeteriaApp.Forms
 
         private double ObtenerTotalVentasHoy()
         {
-            // TODO: Reemplazar esta simulación con la suma real desde la tabla de ventas
-            return 0; // Por ahora, si no tenés sistema de ventas activo
+            double total = 0;
+
+            using (var conn = BaseDatos.ObtenerConexion())
+            {
+                conn.Open();
+
+                string query = @"
+            SELECT SUM(Total) 
+            FROM Ventas 
+            WHERE DATE(FechaHora) = DATE('now', 'localtime')";
+
+                using (var cmd = new SQLiteCommand(query, conn))
+                {
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value && result != null)
+                    {
+                        total = Convert.ToDouble(result);
+                    }
+                }
+            }
+
+            return total;
         }
     }
 }
