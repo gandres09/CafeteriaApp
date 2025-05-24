@@ -34,21 +34,36 @@ namespace CafeteriaApp.Forms
             this.btnRefrescar = new System.Windows.Forms.Button();
             this.btnExportarExcel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-
             ((System.ComponentModel.ISupportInitialize)(this.dgvResumen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).BeginInit();
             this.SuspendLayout();
-
             // 
-            // label1
+            // dgvResumen
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Filtrar por fecha";
-
+            this.dgvResumen.AllowUserToAddRows = false;
+            this.dgvResumen.AllowUserToDeleteRows = false;
+            this.dgvResumen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvResumen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResumen.Location = new System.Drawing.Point(20, 55);
+            this.dgvResumen.Name = "dgvResumen";
+            this.dgvResumen.ReadOnly = true;
+            this.dgvResumen.Size = new System.Drawing.Size(440, 180);
+            this.dgvResumen.TabIndex = 3;
+            // 
+            // dgvVentas
+            // 
+            this.dgvVentas.AllowUserToAddRows = false;
+            this.dgvVentas.AllowUserToDeleteRows = false;
+            this.dgvVentas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvVentas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVentas.Location = new System.Drawing.Point(20, 250);
+            this.dgvVentas.Name = "dgvVentas";
+            this.dgvVentas.ReadOnly = true;
+            this.dgvVentas.Size = new System.Drawing.Size(440, 200);
+            this.dgvVentas.TabIndex = 4;
+            this.dgvVentas.SelectionChanged += new System.EventHandler(this.dgvResumen_SelectionChanged);
             // 
             // dtpFiltro
             // 
@@ -57,7 +72,6 @@ namespace CafeteriaApp.Forms
             this.dtpFiltro.Name = "dtpFiltro";
             this.dtpFiltro.Size = new System.Drawing.Size(110, 20);
             this.dtpFiltro.TabIndex = 1;
-
             // 
             // btnRefrescar
             // 
@@ -68,36 +82,6 @@ namespace CafeteriaApp.Forms
             this.btnRefrescar.Text = "Actualizar";
             this.btnRefrescar.UseVisualStyleBackColor = true;
             this.btnRefrescar.Click += new System.EventHandler(this.btnRefrescar_Click);
-
-            // 
-            // dgvResumen
-            // 
-            this.dgvResumen.AllowUserToAddRows = false;
-            this.dgvResumen.AllowUserToDeleteRows = false;
-            this.dgvResumen.ReadOnly = true;
-            this.dgvResumen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvResumen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResumen.Location = new System.Drawing.Point(20, 55);
-            this.dgvResumen.Name = "dgvResumen";
-            this.dgvResumen.Size = new System.Drawing.Size(440, 180);
-            this.dgvResumen.TabIndex = 3;
-
-            // 
-            // dgvVentas
-            // 
-            this.dgvVentas.AllowUserToAddRows = false;
-            this.dgvVentas.AllowUserToDeleteRows = false;
-            this.dgvVentas.ReadOnly = true;
-            this.dgvVentas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVentas.Location = new System.Drawing.Point(20, 250);
-            this.dgvVentas.Name = "dgvVentas";
-            this.dgvVentas.Size = new System.Drawing.Size(440, 200);
-            this.dgvVentas.TabIndex = 4;
-            dgvVentas.Dock = DockStyle.Bottom; // o
-            dgvVentas.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
-
             // 
             // btnExportarExcel
             // 
@@ -108,7 +92,15 @@ namespace CafeteriaApp.Forms
             this.btnExportarExcel.Text = "Exportar a Excel";
             this.btnExportarExcel.UseVisualStyleBackColor = true;
             this.btnExportarExcel.Click += new System.EventHandler(this.btnExportarExcel_Click);
-
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(30, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Filtrar por fecha";
             // 
             // FormResumenDia
             // 
@@ -127,11 +119,11 @@ namespace CafeteriaApp.Forms
             this.Name = "FormResumenDia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Resumen del Día";
-
             ((System.ComponentModel.ISupportInitialize)(this.dgvResumen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

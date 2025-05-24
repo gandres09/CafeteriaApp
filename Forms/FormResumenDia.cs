@@ -24,6 +24,8 @@ namespace CafeteriaApp.Forms
             dtpFiltro.Value = DateTime.Today;
             CargarResumen(DateTime.Today);
             dgvResumen.CellFormatting += dgvResumen_CellFormatting;
+            dgvResumen.SelectionChanged += dgvResumen_SelectionChanged;
+
         }
 
         private void btnRefrescar_Click(object sender, EventArgs e)
@@ -165,34 +167,48 @@ namespace CafeteriaApp.Forms
             }
         }
 
-        private void CargarVentasDelArqueo(SQLiteConnection conn, int arqueoId)
+        private bool isUpdating = false;
+
+        private void dgvResumen_SelectionChanged(object sender, EventArgs e)
         {
-            dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvVentas.Columns["Producto"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgvVentas.Columns["FechaHora"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
-            dgvVentas.Columns["Cantidad"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            if (isUpdating) return;
+            isUpdating = true;
 
-            string sql = @"SELECT V.FechaHora, P.Nombre AS Producto, V.Cantidad, V.PrecioUnitario, V.Total
-                           FROM Ventas V
-                           JOIN Productos P ON V.ProductoId = P.Id
-                           WHERE V.ArqueoId = @arqueoId
-                           ORDER BY V.FechaHora";
-
-            using (var cmd = new SQLiteCommand(sql, conn))
+            if (dgvResumen.SelectedRows.Count > 0)
             {
-                cmd.Parameters.AddWithValue("@arqueoId", arqueoId);
-                using (var adapter = new SQLiteDataAdapter(cmd))
+                DataRowView filaSeleccionada = dgvResumen.SelectedRows[0].DataBoundItem as DataRowView;
+                if (filaSeleccionada != null && filaSeleccionada["Fecha"] != DBNull.Value)
                 {
-                    DataTable dtVentas = new DataTable();
-                    adapter.Fill(dtVentas);
-                    dgvVentas.DataSource = dtVentas;
+                    string fechaSeleccionada = Convert.ToDateTime(filaSeleccionada["Fecha"]).ToString("yyyy-MM-dd");
 
-                    dgvVentas.Columns["FechaHora"].HeaderText = "Fecha";
-                    dgvVentas.Columns["PrecioUnitario"].DefaultCellStyle.Format = "C2";
-                    dgvVentas.Columns["Total"].DefaultCellStyle.Format = "C2";
+                    using (var conn = BaseDatos.ObtenerConexion())
+                    {
+                        conn.Open();
+                        string sql = "SELECT Id FROM ArqueoDiario WHERE Fecha = @fecha LIMIT 1";
+
+                        using (var cmd = new SQLiteCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@fecha", fechaSeleccionada);
+                            object result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                int arqueoId = Convert.ToInt32(result);
+                                CargarVentasDelArqueo(conn, arqueoId);
+                            }
+                            else
+                            {
+                                dgvVentas.DataSource = null;
+                            }
+                        }
+                    }
                 }
             }
+
+            isUpdating = false;
         }
+
+    
 
 
         // ...
@@ -408,27 +424,71 @@ namespace CafeteriaApp.Forms
         {
             DataTable dt = new DataTable();
 
-            string query = @"
-        SELECT v.FechaHora, p.Nombre AS Producto, v.Cantidad, v.PrecioUnitario, v.Total 
-        FROM Ventas v
-        JOIN Productos p ON v.ProductoId = p.Id
-        WHERE DATE(v.FechaHora) = @Fecha 
-        ORDER BY v.FechaHora ASC";
+            string fechaStrInicio = fecha.ToString("yyyy-MM-dd") + " 00:00:00";
+            string fechaStrFin = fecha.ToString("yyyy-MM-dd") + " 23:59:59";
 
-            using (var conn = BaseDatos.ObtenerConexion()) // Usamos la conexión correcta
+            string query = @"
+        SELECT V.FechaHora, P.Nombre AS Producto, V.Cantidad, V.PrecioUnitario, V.Total
+        FROM Ventas V
+        JOIN Productos P ON V.ProductoId = P.Id
+        WHERE V.FechaHora BETWEEN @fechaInicio AND @fechaFin
+        ORDER BY V.FechaHora
+    ";
+
+            using (var conn = BaseDatos.ObtenerConexion())
             {
                 conn.Open();
                 using (var cmd = new SQLiteCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Fecha", fecha.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaStrInicio);
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaStrFin);
+
                     using (var adapter = new SQLiteDataAdapter(cmd))
                     {
-                        adapter.Fill(dt); // ← Aquí corregiste el error anterior de 'wadapter'
+                        adapter.Fill(dt);
                     }
                 }
             }
 
             return dt;
+        }
+
+        private void CargarVentasDelArqueo(SQLiteConnection conn, int arqueoId)
+        {
+            dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            if (dgvVentas.Columns.Contains("Producto"))
+            {
+                dgvVentas.Columns["Producto"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+            if (dgvVentas.Columns.Contains("FechaHora"))
+            {
+                dgvVentas.Columns["FechaHora"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
+            }
+
+            if (dgvVentas.Columns.Contains("Cantidad"))
+            {
+                dgvVentas.Columns["Cantidad"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+            string sql = @"SELECT V.FechaHora, P.Nombre AS Producto, V.Cantidad, V.PrecioUnitario, V.Total
+                           FROM Ventas V
+                           JOIN Productos P ON V.ProductoId = P.Id
+                           WHERE V.ArqueoId = @arqueoId
+                           ORDER BY V.FechaHora";
+
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@arqueoId", arqueoId);
+                using (var adapter = new SQLiteDataAdapter(cmd))
+                {
+                    DataTable dtVentas = new DataTable();
+                    adapter.Fill(dtVentas);
+                    dgvVentas.DataSource = dtVentas;
+
+                    dgvVentas.Columns["FechaHora"].HeaderText = "Fecha";
+                    dgvVentas.Columns["PrecioUnitario"].DefaultCellStyle.Format = "C2";
+                    dgvVentas.Columns["Total"].DefaultCellStyle.Format = "C2";
+                }
+            }
         }
 
 
